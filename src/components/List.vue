@@ -193,13 +193,14 @@ const currentIdTask = (data) =>{
 
         <div class="mb-4 flex flex-col justify-around items-center mt-[15px]">
 
-            <div class="my-4" v-show="!setNewTask">
+            <div class="my-4 w-[400px]" v-show="!setNewTask">
 
                 <div class="flex">
 
-                    <input type="text" class="pl-2 w-full h-[35px] rounded outline-none" placeholder="Push 'Enter' to add task"  @keydown="$emit(modelValue,$event.target.value)" v-model="newTaskValue">
+                    <input type="text" class="pl-2 w-full h-[35px] rounded outline-none " placeholder="Push 'Enter' to add task"  @keydown="$emit(modelValue,$event.target.value)" v-model="newTaskValue">
 
                     <button class=" ml-4 font-bold" @click="setNewTask = !setNewTask">X</button>
+
                 </div>
 
             </div>

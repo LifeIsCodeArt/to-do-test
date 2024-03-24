@@ -184,7 +184,7 @@ const temporaryArray = ref([])
 
             <ul class="flex flex-col mb-4 w-[430px] list-decimal " v-show="temporaryArray.length">
 
-                <li v-for="item in temporaryArray" :key="item.index"  class=" border-black text-left pl-2  h-[35px] rounded mb-[20px] bg-white">{{item.Text}}</li>
+                <li v-for="item in temporaryArray" :key="item.index"  class=" border-black text-left pl-2  h-[25px] rounded mb-[20px] bg-white">{{item.Text}}</li>
 
             </ul>
 
