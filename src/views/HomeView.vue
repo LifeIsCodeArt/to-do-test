@@ -59,6 +59,7 @@ import List from '@/components/List.vue'
 
 
 const setCurrentTaskBoardId = (id) => {
+
     if(localStorage.getItem('currentTaskBoardId') == id) {
 
         console.log('This id currently used')
@@ -68,7 +69,6 @@ const setCurrentTaskBoardId = (id) => {
 
         localStorage.setItem('currentTaskBoardId',id.toString())
 
-        console.log(id)
     }
 }
 
@@ -174,18 +174,6 @@ const deleteItem = () =>{
 
 }
 
-/*const deleteItem = () =>{
-    const currentTask = localStorage.getItem('currentTaskId')-1
-    taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.splice(Number(localStorage.getItem('currentTaskId'))-1,1)
-    for(let i = localStorage.getItem('currentTaskId')-1;
-        i <= taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.length;
-        i++){
-
-        taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks[i].id = Number(i)+1
-
-    }
-
-}*/
 
 const subTask = ref()
 
