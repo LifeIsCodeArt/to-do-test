@@ -35,7 +35,6 @@ const singleEditing = ref(false)
 
 const mainEditing = ref(false)
 
-const currentSubTask = ref(localStorage.getItem('currentTaskId'))
 
 const currentIdTask = (data) =>{
 

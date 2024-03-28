@@ -2,6 +2,8 @@
 import { ref, computed, inject } from 'vue'
 import List from '@/components/List.vue'
 
+
+
     const taskList = ref([
         {
             id:1,
@@ -58,23 +60,30 @@ import List from '@/components/List.vue'
 
 const setCurrentTaskBoardId = (id) => {
     if(localStorage.getItem('currentTaskBoardId') == id) {
+
         console.log('This id currently used')
+
     }
     else{
+
         localStorage.setItem('currentTaskBoardId',id.toString())
+
         console.log(id)
     }
 }
 
 const Input = (e) =>{
 
+    const board = taskList.value[localStorage.getItem('currentTaskBoardId')-1]
+
     addNewTask.value = e.target.value
 
     if(e.code === 'Enter' && e.target.value) {
-        taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.push(
+
+        board.Subtasks.push(
 
                 {
-                    id:taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.length+1,
+                    id:board.Subtasks.length+1,
 
                     Text:`${e.target.value}`
                 }
@@ -83,66 +92,100 @@ const Input = (e) =>{
     }
 }
 
+
 const updatedValue = (updatedValueTest, fieldClose) =>{
 
-    taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks[localStorage.getItem('currentTaskId')-1].Text = updatedValueTest
+    const task = localStorage.getItem('currentTaskId')-1
+
+    const board = localStorage.getItem('currentTaskBoardId')-1
+
+    taskList.value[board].Subtasks[task].Text = updatedValueTest
+
     fieldClose.value = !fieldClose
+
+    console.log(updatedValueTest)
+    console.log(fieldClose)
 }
 
 const updatedMainTask = (updatedTaskName, updatedDescription) =>{
 
-    taskList.value[localStorage.getItem('currentTaskBoardId')-1].Task = updatedTaskName
+    const currentBoard = localStorage.getItem('currentTaskBoardId')-1
 
-    taskList.value[localStorage.getItem('currentTaskBoardId')-1].Description = updatedDescription
+    taskList.value[currentBoard].Task = updatedTaskName
+
+    taskList.value[currentBoard].Description = updatedDescription
 }
+
+
 
 const changeStatus = () =>{
 
-    if(taskList.value[localStorage.getItem('currentTaskBoardId') - 1].Subtasks){
-        taskList.value[localStorage.getItem('currentTaskBoardId')-1].Status = !taskList.value[localStorage.getItem('currentTaskBoardId')-1].Status
+    const currentBoard = taskList.value[localStorage.getItem('currentTaskBoardId')-1]
 
-        for(let i = 0; i<taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.length; i++){
+    if(currentBoard.Subtasks){
 
-            taskList.value[localStorage.getItem('currentTaskBoardId') - 1].Subtasks[i].Status = taskList.value[localStorage.getItem('currentTaskBoardId') - 1].Status;
+        currentBoard.Status = !currentBoard.Status
+
+        for(let i = 0; i<currentBoard.Subtasks.length; i++){
+
+            currentBoard.Subtasks[i].Status = currentBoard.Status;
 
 
         }
 
     }
 
-    else taskList.value[localStorage.getItem('currentTaskBoardId')-1].Status = !taskList.value[localStorage.getItem('currentTaskBoardId')-1].Status
+    else currentBoard.Status = !currentBoard.Status
 
 }
 
 
 const deleteList = () =>{
 
+    const board = localStorage.getItem('currentTaskBoardId')-1
 
+        taskList.value.splice(taskList.value[board].id-1,1)
 
-        taskList.value.splice(taskList.value[localStorage.getItem('currentTaskBoardId')-1].id-1,1)
-
-        for(let i = localStorage.getItem('currentTaskBoardId')-1; i <= taskList.value.length; i++){
+        for(let i = board; i <= taskList.value.length; i++){
 
             taskList.value[i].id = Number(i)+1
 
         }
 
-
+console.log('see')
 }
 
 
 const deleteItem = () =>{
 
-        taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.splice(Number(localStorage.getItem('currentTaskId'))-1,1)
-        for(let i = localStorage.getItem('currentTaskId')-1;
-            i <= taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.length;
+    const task = localStorage.getItem('currentTaskId')-1
+
+    const board = localStorage.getItem('currentTaskBoardId')-1
+
+    taskList.value[board].Subtasks.splice(Number(task),1)
+
+        for(let i = task;
+            i <= taskList.value[board].Subtasks.length;
             i++){
 
-            taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks[i].id = Number(i)+1
+            taskList.value[board].Subtasks[i].id = Number(i)+1
 
         }
 
 }
+
+/*const deleteItem = () =>{
+    const currentTask = localStorage.getItem('currentTaskId')-1
+    taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.splice(Number(localStorage.getItem('currentTaskId'))-1,1)
+    for(let i = localStorage.getItem('currentTaskId')-1;
+        i <= taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks.length;
+        i++){
+
+        taskList.value[localStorage.getItem('currentTaskBoardId')-1].Subtasks[i].id = Number(i)+1
+
+    }
+
+}*/
 
 const subTask = ref()
 
